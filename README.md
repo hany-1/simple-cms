@@ -18,6 +18,7 @@ Simple CMS that include only posts management, pages management, categories and 
 - [Jquery Datatable Server Side Rendering https://datatables.net/manual/server-side]
 - [Bootstrap5 https://getbootstrap.com/docs/5.3/getting-started/introduction/]
 - [FontAwesome Free Icons https://fontawesome.com/search?q=edit&o=r&m=free]
+- [ERD DIAGRAM https://codex.wordpress.org/Database_Description#Table:_wp_comments]
 
 
 ## Future Enhancement

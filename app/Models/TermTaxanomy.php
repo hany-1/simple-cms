@@ -15,7 +15,7 @@ class TermTaxanomy extends Model
      * @var array<int, string>
      */
     protected $fillable = [
-        'taxonomy',
+        'taxanomy',
         'description',
         'term_id'
     ];

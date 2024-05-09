@@ -17,6 +17,8 @@ class Term extends Model
     protected $fillable = [
         'name',
         'slug',
+        'created_at',
+        'updated_at'
     ];
 
     /**
@@ -35,10 +37,22 @@ class Term extends Model
 
     protected $attributes = [];
 
-    protected $appends = [];
+    protected $appends = [
+        'converted_created_at', 'converted_updated_at'
+    ];
 
-    public function taxanomies()
+    public function taxanomy()
     {
-        return $this->hasMany(TermTaxanomy::class);
+        return $this->hasOne(TermTaxanomy::class);
+    }
+
+    public function getConvertedCreatedAtAttribute()
+    {
+        return $this->created_at->format('d-m-Y H:i:s');
+    }
+
+    public function getConvertedUpdatedAtAttribute()
+    {
+        return $this->updated_at->format('d-m-Y H:i:s');
     }
 }

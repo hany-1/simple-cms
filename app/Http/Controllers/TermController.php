@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Term;
+use App\Models\TermTaxanomy;
 use Illuminate\Http\Request;
 
 class TermController extends Controller
@@ -19,11 +20,11 @@ class TermController extends Controller
         if ($type == null) return abort(404);
 
         if (request()->ajax()) {
-            $items = Term::with(['taxanomies'])
+            $items = Term::with(['taxanomy'])
                 ->when(isset($request->search['value']) && !empty($request->search), function ($q) use ($request) {
                     $q->where('name', 'like', '%' . $request->search['value'] . '%');
                 })
-                ->whereHas('taxanomies', function ($q) use ($type) {
+                ->whereHas('taxanomy', function ($q) use ($type) {
                     $q->where('taxanomy',  $type);
                 })
                 ->orderBy('created_at', 'desc')
@@ -85,8 +86,9 @@ class TermController extends Controller
 
         if ($id == null) {
             $item = new Term;
+            $item->taxanomy = new TermTaxanomy;
         } else {
-            $item = Term::find($id);
+            $item = Term::with(['taxanomy'])->find($id);
         }
 
         return view($this->viewName($type, true))->with(['item' => $item]);
@@ -102,7 +104,40 @@ class TermController extends Controller
     public function update(Request $request, $id)
     {
         // 
+        $rules = [
+            'name' => 'required',
+            'slug' => 'required',
+        ];
+        $request->validate($rules);
 
+        $type = $this->returnType(request()->route()->getName());
+        $data = $request->except(['_method']);
+        $isEdit = false;
+        if ($id == null) {
+            $item = Term::create($data);
+        } else {
+            $item = Term::find($id);
+            $item->update($data);
+            $isEdit = true;
+        }
+
+        if ($item) {
+            if ($isEdit) {
+                $taxanomy = TermTaxanomy::where('taxanomy', $type)->where('term_id', $item->id)->first();
+                $taxanomy->description = isset($data['description']) ? $data['description'] : null;
+                $taxanomy->save();
+            } else {
+                $taxanomy = TermTaxanomy::create([
+                    'taxanomy' => $type,
+                    'description' => isset($data['description']) ? $data['description'] : null,
+                ]);
+                $item->taxanomy()->save($taxanomy);
+            }
+        }
+
+        return redirect()->route($this->routeName($type))->with([
+            'item' => $item,
+        ]);
     }
 
     /**
@@ -113,13 +148,15 @@ class TermController extends Controller
      */
     public function destroy($id)
     {
-        //
-    }
-
-    private function validateType(Request $request)
-    {
-        $type = $this->returnType($request->route()->getName());
-        if ($type == null) return abort(404);
+        $item = Term::find($id);
+        if ($item) {
+            if ($item->taxanomy) {
+                $item->taxanomy->delete();
+            }
+            $item->delete();
+            return response(['message' => 'Term deleted!']);
+        }
+        return response(['message' => 'Invalid term!']);
     }
 
     private function returnType($route = null)
@@ -148,7 +185,7 @@ class TermController extends Controller
                 break;
             case POST_TAG:
             case PAGE_TAG:
-                $view = $isEdit ? 'admin.tags.edit' : 'admin.tag.index';
+                $view = $isEdit ? 'admin.tags.edit' : 'admin.tags.index';
                 break;
             default:
                 $view = null;

@@ -44,7 +44,7 @@
                         <div class="form-group row">
                             <div class="col-md-12">
                                 <label for="description" class="form-label">{{__('Description')}}</label>
-                                <textarea id="description" class="form-control" name="description">{!! $item->description !!}</textarea>
+                                <textarea id="description" class="form-control" name="description">{!! ($item->taxanomy ? $item->taxanomy->description : null) !!}</textarea>
                             </div>
                         </div>
                         <div class="form-group row mt-2">
