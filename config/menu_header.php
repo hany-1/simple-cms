@@ -21,36 +21,30 @@ return [
             'new-tab' => false,
         ],
         [
-            'title' => 'Category',
+            'title' => 'Terms',
             'page-group' => 'admin.categories',
-            'page' => 'admin.categories.index',
+            'page' => null,
             'new-tab' => false,
+            'submenu' => [
+                [
+                    'title' => 'Category',
+                    'page-group' => 'admin.categories',
+                    'page' => 'admin.categories.index',
+                    'new-tab' => false,
+                ],
+                [
+                    'title' => 'Tag',
+                    'page-group' => 'admin.tags',
+                    'page' => 'admin.tags.index',
+                    'new-tab' => false,
+                ]
+            ]
         ],
         [
-            'title' => 'Tags',
-            'page-group' => 'admin.tags',
-            'page' => 'admin.tags.index',
+            'title' => 'Users',
+            'page-group' => 'admin.users',
+            'page' => 'admin.users.index',
             'new-tab' => false,
         ],
-        // [
-        //     'title' => 'Posts',
-        //     'page-group' => 'admin.post',
-        //     'page' => 'admin.pages.index',
-        //     'new-tab' => false,
-        //     'submenu' => [
-        //         [
-        //             'title' => 'Category',
-        //             'page-group' => 'admin.post',
-        //             'page' => 'admin.home',
-        //             'new-tab' => false,
-        //         ],
-        //         [
-        //             'title' => 'Tag',
-        //             'page-group' => 'admin.post',
-        //             'page' => 'admin.home',
-        //             'new-tab' => false,
-        //         ]
-        // ]
-        // ]
     ],
 ];

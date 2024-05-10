@@ -136,7 +136,7 @@ class TermController extends Controller
         }
 
         return redirect()->route($this->routeName($type))->with([
-            'item' => $item,
+            'message' => 'Term created!',
         ]);
     }
 

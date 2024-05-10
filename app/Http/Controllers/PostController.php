@@ -131,7 +131,7 @@ class PostController extends Controller
         }
 
         return redirect()->route($this->returnRoute())->with([
-            'message' => 'Post created!',
+            'message' => $this->returnMessage(),
         ]);
     }
 
@@ -183,5 +183,22 @@ class PostController extends Controller
                 break;
         }
         return $view;
+    }
+
+    private function returnMessage()
+    {
+        $message = null;
+        switch ($this->type) {
+            case POST:
+                $message = 'Post created!';
+                break;
+            case PAGE:
+                $message = 'Page created!';
+                break;
+            default:
+                $message = null;
+                break;
+        }
+        return $message;
     }
 }

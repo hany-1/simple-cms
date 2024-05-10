@@ -22,6 +22,8 @@ class User extends Authenticatable
         'email',
         'password',
         'status',
+        'created_at',
+        'updated_at'
     ];
 
     /**
@@ -42,4 +44,23 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    protected $appends = [
+        'converted_created_at', 'converted_updated_at'
+    ];
+
+    public function getConvertedCreatedAtAttribute()
+    {
+        return $this->created_at->format('d-m-Y H:i:s');
+    }
+
+    public function getConvertedUpdatedAtAttribute()
+    {
+        return $this->updated_at->format('d-m-Y H:i:s');
+    }
+
+    public static function user_statuses()
+    {
+        return [ACTIVE, INACTIVE];
+    }
 }

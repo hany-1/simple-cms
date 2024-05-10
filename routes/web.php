@@ -6,6 +6,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\TermController;
+use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -30,6 +31,8 @@ Route::group(['middleware' => 'auth', 'prefix' => 'admin', 'as' => 'admin.'], fu
     Route::resource('posts', PostController::class);
     //Pages
     Route::resource('pages', PageController::class);
+    //Users
+    Route::resource('users', UserController::class);
 
     //Category
     Route::group(['prefix' => 'categories', 'as' => 'categories.'], function () {
