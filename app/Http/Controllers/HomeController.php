@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Post;
+use App\Models\Option;
 
 class HomeController extends Controller
 {
@@ -29,5 +31,19 @@ class HomeController extends Controller
     public function test()
     {
         return view('test');
+    }
+
+    public function welcome()
+    {
+        //TODO: based on theme selected, return correct blade file, for now just return welcome 
+        // 1. `welcome` is default
+        // 2. default 
+        $pages = Post::where('status', PUBLISHED)->where('post_type', PAGE)->orderBy('menu_order', 'asc')->get();
+
+        $options = Option::all();
+        return view('templates.resume')->with([
+            'pages' => $pages,
+            'options' => $options,
+        ]);
     }
 }

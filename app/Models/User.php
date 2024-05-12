@@ -45,6 +45,10 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    protected $attributes = [
+        'status' => ACTIVE,
+    ];
+
     protected $appends = [
         'converted_created_at', 'converted_updated_at'
     ];

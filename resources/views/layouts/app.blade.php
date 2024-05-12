@@ -11,8 +11,10 @@
     <title>{{ config('app.name', 'Laravel') }}</title>
 
     <!-- Scripts -->
-    <!-- CkEDITOR5 -->
-    <script src="{{ asset('ckeditor/ckeditor5-classic.js') }}" defer></script>
+    <link href="{{ asset('froala/css/froala_editor.pkgd.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('froala/css/froala_style.min.css') }}" rel="stylesheet">
+    <script src="{{ asset('froala/js/froala_editor.pkgd.min.js') }}"></script>
+
     <!-- Common JS -->
     <script src="{{ asset('js/app.js') }}"></script>
 

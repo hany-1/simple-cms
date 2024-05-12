@@ -100,29 +100,24 @@ class UserController extends Controller
         $rules = [
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'email', Rule::unique('users')->ignore($id)],
+            'status' => ['required', Rule::in(User::user_statuses())]
         ];
-        if (!$id) {
-            $rules['password'] = ['required', 'string', 'min:8'];
-        }
-
         if (isset($request->password) && $request->password != null) {
-            $rules['password'] = ['min:8', 'string'];
+            $rules['password'] = ['min:8', 'string', ($id == null ? 'required' : '')];
         }
         $request->validate($rules);
 
-        $data = $request->except(['_method', 'password']);
+        $data = $request->except(['_method']);
         $isEdit = false;
         if ($id == null) {
             $item = User::create($data);
         } else {
-            $isEdit  = true;
+            if ($data['password'] == null) {
+                unset($data['password']);
+            }
+            $isEdit = true;
             $item = User::find($id);
             $item->update($data);
-        }
-
-        if (isset($request->password) && $request->password != null) {
-            $item->password = Hash::make($request->password);
-            $item->save();
         }
 
         return redirect()->route('admin.users.index')->with([

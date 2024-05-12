@@ -20,9 +20,7 @@ use App\Http\Controllers\UserController;
 */
 
 Auth::routes();
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [HomeController::class, 'welcome'])->name('welcome');
 
 Route::group(['middleware' => 'auth', 'prefix' => 'admin', 'as' => 'admin.'], function () {
     Route::get('/home', [HomeController::class, 'index'])->name('home');

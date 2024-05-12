@@ -97,3 +97,11 @@
     </div>
 </div>
 @endsection
+
+@section('scripts')
+<script>
+    var editor = new FroalaEditor('#editor', {
+        // pluginsEnabled: ['image', 'link', 'draggable'],
+    });
+</script>
+@endsection

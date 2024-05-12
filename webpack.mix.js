@@ -11,7 +11,8 @@ const mix = require('laravel-mix');
  |
  */
 
-mix.js('resources/js/ckeditor5-classic.js', "public/ckeditor");
+mix.copy('node_modules/froala-editor/css', 'public/froala/css');
+mix.copy('node_modules/froala-editor/js', 'public/froala/js');
 mix.js(['resources/js/app.js', 'resources/js/web.js'], 'public/js')
     .sass('resources/sass/app.scss', 'public/css')
     .sourceMaps();
