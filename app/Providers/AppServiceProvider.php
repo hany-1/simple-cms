@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Facades\URL;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -24,7 +25,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        //if not local then force scheme to https
+        if (env('APP_ENV') != 'local') {
+            URL::forceScheme('https');
+        }
     }
 
     private function loadHelpers()
