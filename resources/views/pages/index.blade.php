@@ -1,6 +1,18 @@
 @extends('layouts.app')
 
 @section('content')
+@if(isset($message))
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-10">
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="close"></button>
+                <strong>{{$message}}</strong> <br />
+            </div>
+        </div>
+    </div>
+</div>
+@endif
 
 <div class="container">
     <div class="row justify-content-center">

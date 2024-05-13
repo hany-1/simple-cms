@@ -12,6 +12,9 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+
+    <!-- Scripts -->
+    <script src="{{ asset('js/app.js') }}"></script>
 </head>
 
 <body class="d-flex flex-column min-vh-100">

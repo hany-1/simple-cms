@@ -108,6 +108,11 @@ class UserController extends Controller
         $request->validate($rules);
 
         $data = $request->except(['_method']);
+        //Hash if password not null
+        if (isset($data['password']) && $data['password'] != null) {
+            $data['password'] = Hash::make($data['password']);
+        }
+
         $isEdit = false;
         if ($id == null) {
             $item = User::create($data);
