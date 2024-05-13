@@ -130,6 +130,12 @@ class PostController extends Controller
             $item->update($data);
         }
 
+        if ($item) {
+            //generate slug here
+            $item->slug = slugify($item->title);
+            $item->save();
+        }
+
         return redirect()->route($this->returnRoute())->with([
             'message' => $this->returnMessage(),
         ]);
@@ -200,5 +206,11 @@ class PostController extends Controller
                 break;
         }
         return $message;
+    }
+
+    public function getPage(Request $request)
+    {
+        $page = Post::where('slug', $request->slug)->where('post_type', PAGE)->first();
+        return view('templates.resume.index', ['page' => $page]);
     }
 }

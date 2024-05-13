@@ -38,12 +38,9 @@ class HomeController extends Controller
         //TODO: based on theme selected, return correct blade file, for now just return welcome 
         // 1. `welcome` is default
         // 2. default 
-        $pages = Post::where('status', PUBLISHED)->where('post_type', PAGE)->orderBy('menu_order', 'asc')->get();
-
-        $options = Option::all();
-        return view('templates.resume')->with([
-            'pages' => $pages,
-            'options' => $options,
+        $page = Post::where('status', PUBLISHED)->where('post_type', PAGE)->orderBy('menu_order', 'asc')->first();
+        return view('templates.resume.index')->with([
+            'page' => isset($page) ? $page : null, //default first page will be shown
         ]);
     }
 }

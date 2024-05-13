@@ -29,6 +29,7 @@ class Post extends Model
         'comment_count',
         'created_at',
         'updated_at',
+        'slug',
     ];
 
     /**
@@ -75,12 +76,6 @@ class Post extends Model
         return $this->post_type == PAGE;
     }
 
-    // public function convertDate()
-    // {
-    //     $this->converted_created_at = $this->created_at->format('d-m-Y H:i:s');
-    //     $this->converted_updated_at = $this->updated_at->format('d-m-Y H:i:s');
-    // }
-
     public function getConvertedCreatedAtAttribute()
     {
         return $this->created_at->format('d-m-Y H:i:s');
@@ -89,5 +84,18 @@ class Post extends Model
     public function getConvertedUpdatedAtAttribute()
     {
         return $this->updated_at->format('d-m-Y H:i:s');
+    }
+
+    public function getLinkAttribute()
+    {
+        return route('page', ['slug' => $this->slug]);
+    }
+
+    public static function allPages()
+    {
+        return self::where('status', PUBLISHED)
+            ->where('post_type', PAGE)
+            ->orderBy('menu_order', 'asc')
+            ->get();
     }
 }

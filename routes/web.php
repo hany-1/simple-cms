@@ -21,6 +21,7 @@ use App\Http\Controllers\UserController;
 
 Auth::routes();
 Route::get('/', [HomeController::class, 'welcome'])->name('welcome');
+Route::get('page/{slug}', [PageController::class, 'getPage'])->name('page');
 
 Route::group(['middleware' => 'auth', 'prefix' => 'admin', 'as' => 'admin.'], function () {
     Route::get('/home', [HomeController::class, 'index'])->name('home');
